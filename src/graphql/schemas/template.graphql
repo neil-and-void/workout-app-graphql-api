@@ -1,0 +1,12 @@
+type ExerciseTemplate {
+  id: Number!
+  name: String!
+  reps: Number!
+  sets: Number!
+}
+
+type WorkoutTemplate {
+  id: Number!
+  name: String!
+  exerciseTemplates: ExerciseTemplate
+}

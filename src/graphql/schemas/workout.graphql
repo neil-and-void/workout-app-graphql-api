@@ -1,0 +1,8 @@
+type Workout {
+  id: Number!
+  started: String!
+  ended: String
+  active: Boolean
+  exercises: Exercise
+  workoutTemplate: WorkoutTemplate
+}
