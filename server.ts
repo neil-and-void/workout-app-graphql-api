@@ -1,10 +1,20 @@
 import dotenv from 'dotenv';
-import app from './src';
+import startApolloServer from './src';
+import { gql } from 'apollo-server-express';
 
 dotenv.config();
 
-const PORT = process.env.PORT;
+const typeDefs = gql`
+  type Query {
+    hello: String
+  }
+`;
 
-app.listen(PORT, () => {
-  console.log(`⚡️[server]: Server is running at https://localhost:${PORT}`);
-});
+// Provide resolver functions for your schema fields
+const resolvers = {
+  Query: {
+    hello: () => 'Hello world!',
+  },
+};
+
+startApolloServer(typeDefs, resolvers);

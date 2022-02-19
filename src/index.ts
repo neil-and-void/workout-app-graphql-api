@@ -1,22 +1,15 @@
 import express from 'express';
-const { ApolloServer, gql } = require('apollo-server-express');
+import { ApolloServer } from 'apollo-server-express';
 
-const typeDefs = gql`
-  type Query {
-    hello: String
-  }
-`;
+export default async function startApolloServer(typeDefs: any, resolvers: any) {
+  const server = new ApolloServer({ typeDefs, resolvers });
 
-// Provide resolver functions for your schema fields
-const resolvers = {
-  Query: {
-    hello: () => 'Hello world!',
-  },
-};
+  await server.start();
 
-const server = new ApolloServer({ typeDefs, resolvers });
+  const app = express();
+  server.applyMiddleware({ app });
 
-const app = express();
-server.applyMiddleware({ app });
-
-export default app;
+  app.listen(4000, () => {
+    console.log(`⚡️[server]: Server is running at http://localhost:${4000}`);
+  });
+}
