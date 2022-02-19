@@ -1,8 +1,22 @@
 import express from 'express';
-// rest of the code remains same
+const { ApolloServer, gql } = require('apollo-server-express');
+
+const typeDefs = gql`
+  type Query {
+    hello: String
+  }
+`;
+
+// Provide resolver functions for your schema fields
+const resolvers = {
+  Query: {
+    hello: () => 'Hello world!',
+  },
+};
+
+const server = new ApolloServer({ typeDefs, resolvers });
 
 const app = express();
-
-app.get('/', (req, res) => res.send('Express + TypeScript Server'));
+server.applyMiddleware({ app });
 
 export default app;
