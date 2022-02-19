@@ -11,8 +11,8 @@ const prisma = new PrismaClient();
 export const createUser = async (email: string, firstname: string) => {
   return await prisma.users.create({
     data: {
-      email: 'elsa@prisma.io',
-      firstname: 'Elsa Prisma',
+      email,
+      firstname,
     },
   });
 };
