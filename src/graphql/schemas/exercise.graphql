@@ -1,5 +1,0 @@
-type Exercise {
-  id: Number
-  exerciseTemplate: ExerciseTemplate
-  sets: [Set]
-}

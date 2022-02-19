@@ -1,20 +1,35 @@
 import dotenv from 'dotenv';
+import resolvers from './src/graphql/resolvers';
+
 import startApolloServer from './src';
-import { gql } from 'apollo-server-express';
+import { typeDefs } from './src/graphql/queries/query';
+import {
+  typeDefsExercise,
+  typeDefsUser,
+  typeDefsSet,
+  typeDefsWorkout,
+  typeDefsTemplate,
+} from './src/graphql/schemas/';
 
 dotenv.config();
 
-const typeDefs = gql`
-  type Query {
-    hello: String
-  }
-`;
-
 // Provide resolver functions for your schema fields
-const resolvers = {
+const Resolvers = {
   Query: {
-    hello: () => 'Hello world!',
+    user: (parent: any, args: any, context: any, info: any) => {
+      return resolvers.user.getUser(args.id);
+    },
   },
 };
 
-startApolloServer(typeDefs, resolvers);
+startApolloServer(
+  [
+    typeDefs,
+    typeDefsExercise,
+    typeDefsUser,
+    typeDefsSet,
+    typeDefsWorkout,
+    typeDefsTemplate,
+  ],
+  Resolvers
+);

@@ -1,7 +1,0 @@
-type User {
-  id: Number!
-  email: String!
-  firstname: String!
-  workouts: [Workout]
-  workoutTemplates: [WorkoutTemplate]
-}

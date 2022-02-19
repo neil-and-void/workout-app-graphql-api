@@ -1,5 +1,0 @@
-type Set {
-  id: Number!
-  weight: Number
-  reps: Number
-}
