@@ -13,15 +13,6 @@ import {
 
 dotenv.config();
 
-// Provide resolver functions for your schema fields
-const Resolvers = {
-  Query: {
-    user: (parent: any, args: any, context: any, info: any) => {
-      return resolvers.user.getUser(args.id);
-    },
-  },
-};
-
 startApolloServer(
   [
     typeDefs,
@@ -31,5 +22,5 @@ startApolloServer(
     typeDefsWorkout,
     typeDefsTemplate,
   ],
-  Resolvers
+  resolvers
 );
