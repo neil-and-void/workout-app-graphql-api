@@ -1,0 +1,93 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model accounts {
+  id      Int    @id @default(autoincrement())
+  height  Int?
+  weight  Int?
+  age     Int?
+  user_id Int?
+  users   users? @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@index([id], map: "ix_accounts_id")
+}
+
+model alembic_version {
+  version_num String @id(map: "alembic_version_pkc") @db.VarChar(32)
+}
+
+model exercise_templates {
+  id                  Int                @id @default(autoincrement())
+  name                String?            @db.VarChar(128)
+  sets                Int?
+  workout_template_id Int?
+  reps                Int?
+  workout_templates   workout_templates? @relation(fields: [workout_template_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  exercises           exercises[]
+
+  @@index([id], map: "ix_exercise_templates_id")
+}
+
+model exercises {
+  id                   Int                 @id @default(autoincrement())
+  workout_id           Int?
+  exercise_template_id Int?
+  exercise_templates   exercise_templates? @relation(fields: [exercise_template_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  workouts             workouts?           @relation(fields: [workout_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  sets                 sets[]
+
+  @@index([id], map: "ix_exercises_id")
+}
+
+model sets {
+  id          Int        @id @default(autoincrement())
+  weight      Float?
+  reps        Int?
+  exercise_id Int?
+  exercises   exercises? @relation(fields: [exercise_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@index([id], map: "ix_sets_id")
+}
+
+model users {
+  id                Int                 @id @default(autoincrement())
+  email             String?             @unique(map: "ix_users_email") @db.VarChar
+  firstname         String?             @db.VarChar
+  hashed_password   String?             @db.VarChar
+  accounts          accounts[]
+  workout_templates workout_templates[]
+  workouts          workouts[]
+
+  @@index([id], map: "ix_users_id")
+}
+
+model workout_templates {
+  id                 Int                  @id @default(autoincrement())
+  name               String?              @db.VarChar(128)
+  user_id            Int?
+  users              users?               @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  exercise_templates exercise_templates[]
+  workouts           workouts[]
+
+  @@index([id], map: "ix_workout_templates_id")
+}
+
+model workouts {
+  id                  Int                @id @default(autoincrement())
+  started             DateTime?          @db.Timestamp(6)
+  ended               DateTime?          @db.Timestamp(6)
+  active              Boolean?
+  user_id             Int?
+  workout_template_id Int?
+  users               users?             @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  workout_templates   workout_templates? @relation(fields: [workout_template_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  exercises           exercises[]
+
+  @@index([id], map: "ix_workouts_id")
+}
