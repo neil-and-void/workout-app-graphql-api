@@ -9,7 +9,9 @@ export default async function startApolloServer(typeDefs: any, resolvers: any) {
   const app = express();
   server.applyMiddleware({ app });
 
-  app.listen(4000, () => {
-    console.log(`⚡️[server]: Server is running at http://localhost:${4000}`);
+  const PORT = process.env.PORT;
+
+  app.listen(PORT, () => {
+    console.log(`⚡️[server]: Server is running at http://localhost:${PORT}`);
   });
 }

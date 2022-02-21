@@ -7,12 +7,19 @@ const prisma = new PrismaClient();
  *
  * @param email email of new user
  * @param firstname firstname of new user
+ * @param hash hashed password
+ *
  */
-export const createUser = async (email: string, firstname: string) => {
+export const createUser = async (
+  email: string,
+  firstname: string,
+  hash: string
+) => {
   return await prisma.users.create({
     data: {
-      email,
-      firstname,
+      email: email,
+      firstname: firstname,
+      hashed_password: hash,
     },
   });
 };
@@ -26,6 +33,20 @@ export const getUser = async (id: number) => {
   return await prisma.users.findUnique({
     where: {
       id: Number(id),
+    },
+  });
+};
+
+/**
+ * READ user by email
+ *
+ * @param email of the user retrieve
+ * @returns
+ */
+export const getUserByEmail = async (email: string) => {
+  return await prisma.users.findUnique({
+    where: {
+      email,
     },
   });
 };

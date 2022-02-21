@@ -1,7 +1,9 @@
 import { gql } from 'apollo-server-express';
 
 export const typeDefs = gql`
-  type Query {
-    user(id: ID): User
+  type AuthSuccess {
+    refreshToken: String!;
+    accessToken: String!;
   }
+
 `;
