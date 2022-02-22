@@ -5,10 +5,6 @@ export const typeDefs = gql`
     user(id: Int): User
   }
 
-  extend type Mutation {
-    user(email: String, firstname: String, password: String, confirmPassword: ConfirmPassword)
-  }
-
   type User {
     id: ID!
     email: String!

@@ -1,9 +1,7 @@
 import dotenv from 'dotenv';
-import resolvers from './src/graphql/resolvers';
+dotenv.config();
 
 import startApolloServer from './src';
-import { typeDefs } from './src/graphql/types';
-
-dotenv.config();
+import { typeDefs, resolvers } from './src/graphql';
 
 startApolloServer(typeDefs, resolvers);

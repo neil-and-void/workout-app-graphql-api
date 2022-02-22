@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client';
+import { Prisma, PrismaClient, users } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
@@ -41,7 +41,7 @@ export const getUser = async (id: number) => {
  * READ user by email
  *
  * @param email of the user retrieve
- * @returns
+ * @returns User
  */
 export const getUserByEmail = async (email: string) => {
   return await prisma.users.findUnique({
