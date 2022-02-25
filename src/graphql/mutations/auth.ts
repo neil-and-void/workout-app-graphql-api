@@ -1,4 +1,3 @@
-import { users } from '@prisma/client';
 import {
   ApolloError,
   AuthenticationError,
