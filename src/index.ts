@@ -1,8 +1,12 @@
 import express from 'express';
 import { ApolloServer } from 'apollo-server-express';
 
-export default async function startApolloServer(typeDefs: any, resolvers: any) {
-  const server = new ApolloServer({ typeDefs, resolvers });
+export default async function startApolloServer(
+  typeDefs: any,
+  resolvers: any,
+  nodeEnv: string
+) {
+  const server = new ApolloServer({ typeDefs, resolvers, nodeEnv });
 
   await server.start();
 

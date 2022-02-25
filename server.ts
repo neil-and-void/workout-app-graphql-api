@@ -4,4 +4,4 @@ dotenv.config();
 import startApolloServer from './src';
 import { typeDefs, resolvers } from './src/graphql';
 
-startApolloServer(typeDefs, resolvers);
+startApolloServer(typeDefs, resolvers, 'debug');
