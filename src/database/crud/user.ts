@@ -1,6 +1,4 @@
-import { Prisma, PrismaClient, users } from '@prisma/client';
-
-const prisma = new PrismaClient();
+import { prisma } from './prismaClient';
 
 /**
  * CREATE new user in db
