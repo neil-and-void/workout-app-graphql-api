@@ -18,14 +18,18 @@ const signToken = (data: object, secret: string, options: object) => {
 };
 
 /**
- * verify and return decoded token
+ * verify and return decoded token or null if cannot be decoded
  *
  * @param token token to decode
  * @param secret secret key
- * @returns object payload of JWT
+ * @returns object payload of JWT or null
  */
 const decodeToken = (token: string, secret: string) => {
-  return jwt.verify(token, secret);
+  try {
+    return jwt.verify(token, secret);
+  } catch (err) {
+    return null;
+  }
 };
 
 /**

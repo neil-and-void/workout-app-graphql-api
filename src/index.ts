@@ -1,12 +1,23 @@
 import express from 'express';
 import { ApolloServer } from 'apollo-server-express';
+import { decodeAccessToken } from './utils/token';
 
 export default async function startApolloServer(
   typeDefs: any,
   resolvers: any,
   nodeEnv: string
 ) {
-  const server = new ApolloServer({ typeDefs, resolvers, nodeEnv });
+  const server = new ApolloServer({
+    typeDefs,
+    resolvers,
+    nodeEnv,
+    context: ({ req }) => {
+      const token = (req.headers['x-access-token'] || '') as string;
+      const user = decodeAccessToken(token);
+
+      return { user };
+    },
+  });
 
   await server.start();
 
