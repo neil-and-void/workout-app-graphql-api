@@ -31,7 +31,7 @@ export const authMutations = {
     }
 
     const hashedPassword = dbUser.hashed_password as string;
-    const authenticated = comparePassword(hashedPassword, password);
+    const authenticated = await comparePassword(hashedPassword, password);
 
     if (!authenticated) {
       throw new AuthenticationError('Incorrect credentials');
