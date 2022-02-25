@@ -7,6 +7,7 @@ import { typeDefs as Workout } from './types/workout';
 import { typeDefs as Exercise } from './types/exercise';
 import { typeDefs as Auth } from './types/auth';
 import { authMutations } from './mutations/auth';
+import { userQueries } from './queries/user';
 
 export const typeDefs = [
   Query,
@@ -22,5 +23,8 @@ export const typeDefs = [
 export const resolvers = {
   Mutation: {
     ...authMutations,
+  },
+  Query: {
+    ...userQueries,
   },
 };
