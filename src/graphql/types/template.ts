@@ -32,7 +32,7 @@ export const typeDefs = gql`
   extend type Mutation {
     createWorkoutTemplate(
       workoutTemplateData: WorkoutTemplateData
-    ): WorkoutTemplate
+    ): CreateWorkoutTemplate
   }
 
   type ExerciseTemplate {
@@ -47,5 +47,11 @@ export const typeDefs = gql`
     userId: String!
     name: String!
     exerciseTemplates: [ExerciseTemplate]
+  }
+
+  type CreateWorkoutTemplate {
+    id: ID!
+    userId: String!
+    name: String!
   }
 `;
