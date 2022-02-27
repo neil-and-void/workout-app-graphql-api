@@ -2,7 +2,7 @@ import { prisma } from './prismaClient';
 
 interface WorkoutFilter {
   user_id: number;
-  id: number;
+  id?: number;
 }
 
 export const getWorkouts = async (filter: WorkoutFilter) => {
