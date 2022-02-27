@@ -2,7 +2,7 @@ import { prisma } from './prismaClient';
 
 interface WorkoutTemplateFilter {
   id?: number;
-  userId?: number;
+  userId: number;
 }
 
 interface ExerciseTemplateFilter {
