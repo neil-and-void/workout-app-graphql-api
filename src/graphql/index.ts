@@ -10,6 +10,8 @@ import { authMutations } from './mutations/auth';
 import { userQueries } from './queries/user';
 import { templateQueries } from './queries/template';
 import { templateMutations } from './mutations/template';
+import { workoutQueries } from './queries/workout';
+import { templateResolvers } from './resolvers/template';
 
 export const typeDefs = [
   Query,
@@ -30,5 +32,9 @@ export const resolvers = {
   Query: {
     ...userQueries,
     ...templateQueries,
+    ...workoutQueries,
+  },
+  WorkoutTemplate: {
+    ...templateResolvers,
   },
 };

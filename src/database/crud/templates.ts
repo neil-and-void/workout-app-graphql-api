@@ -15,7 +15,7 @@ export const createWorkoutTemplate = async (workoutTemplate: any) => {
   const { exerciseTemplates } = workoutTemplate;
   return await prisma.workout_templates.create({
     data: {
-      name: 'hi',
+      name: workoutTemplate.name,
       user_id: workoutTemplate.userId,
       exercise_templates: { create: [...exerciseTemplates] },
     },
@@ -42,7 +42,6 @@ export const getWorkoutTemplates = async (filter: WorkoutTemplatesFilter) => {
  * @returns ExerciseTemplates
  */
 export const getExerciseTemplates = async (filter: ExerciseTemplateFilter) => {
-  console.log(filter);
   const exerciseTemplates = await prisma.workout_templates.findMany({
     select: {
       exercise_templates: {
