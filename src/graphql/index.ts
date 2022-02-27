@@ -12,6 +12,7 @@ import { templateQueries } from './queries/template';
 import { templateMutations } from './mutations/template';
 import { workoutQueries } from './queries/workout';
 import { templateResolvers } from './resolvers/template';
+import { workoutResolvers } from './resolvers/workout';
 
 export const typeDefs = [
   Query,
@@ -36,5 +37,8 @@ export const resolvers = {
   },
   WorkoutTemplate: {
     ...templateResolvers,
+  },
+  Workout: {
+    ...workoutResolvers,
   },
 };
