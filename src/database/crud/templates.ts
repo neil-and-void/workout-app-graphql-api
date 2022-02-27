@@ -2,12 +2,13 @@ import { prisma } from './prismaClient';
 
 interface WorkoutTemplatesFilter {
   id?: number;
-  user_id?: number;
+  userId?: number;
 }
 
 interface ExerciseTemplateFilter {
   id?: number;
-  workout_template_id?: number;
+  userId: number;
+  workoutTemplateId?: number;
 }
 
 export const createWorkoutTemplate = async (workoutTemplate: any) => {
@@ -29,7 +30,8 @@ export const getWorkoutTemplates = async (filter: WorkoutTemplatesFilter) => {
   return await prisma.workout_templates.findMany({
     where: {
       AND: {
-        ...filter,
+        id: filter.id,
+        user_id: filter.userId,
       },
     },
   });
@@ -40,9 +42,33 @@ export const getWorkoutTemplates = async (filter: WorkoutTemplatesFilter) => {
  * @returns ExerciseTemplates
  */
 export const getExerciseTemplates = async (filter: ExerciseTemplateFilter) => {
-  return await prisma.exercise_templates.findMany({
+  console.log(filter);
+  const exerciseTemplates = await prisma.workout_templates.findMany({
+    select: {
+      exercise_templates: {
+        select: {
+          id: true,
+          name: true,
+          sets: true,
+          workout_template_id: true,
+          reps: true,
+        },
+      },
+    },
     where: {
-      ...filter,
+      AND: {
+        user_id: filter.userId,
+        exercise_templates: {
+          every: {
+            workout_template_id: filter.workoutTemplateId,
+          },
+        },
+      },
     },
   });
+
+  // formatting, bring exercise templates to top level in array
+  return exerciseTemplates[0].exercise_templates.map(
+    (exerciseTemplate) => exerciseTemplate
+  );
 };
