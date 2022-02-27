@@ -49,6 +49,14 @@ export const getWorkoutTemplate = async (id: number) => {
   });
 };
 
+export const getExerciseTemplate = async (id: number) => {
+  return await prisma.exercise_templates.findFirst({
+    where: {
+      id: id,
+    },
+  });
+};
+
 /**
  * @param filter parameters to filter query by
  * @returns ExerciseTemplates

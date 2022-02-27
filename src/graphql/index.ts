@@ -14,6 +14,7 @@ import { workoutQueries } from './queries/workout';
 import { templateResolvers } from './resolvers/template';
 import { workoutResolvers } from './resolvers/workout';
 import { userResolvers } from './resolvers/user';
+import { exerciseResolvers } from './resolvers/exercise';
 
 export const typeDefs = [
   Query,
@@ -44,5 +45,8 @@ export const resolvers = {
   },
   Workout: {
     ...workoutResolvers,
+  },
+  Exercise: {
+    ...exerciseResolvers,
   },
 };
