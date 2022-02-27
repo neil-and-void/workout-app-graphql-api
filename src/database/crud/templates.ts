@@ -1,6 +1,6 @@
 import { prisma } from './prismaClient';
 
-interface WorkoutTemplatesFilter {
+interface WorkoutTemplateFilter {
   id?: number;
   userId?: number;
 }
@@ -26,13 +26,25 @@ export const createWorkoutTemplate = async (workoutTemplate: any) => {
  * @param filter parameters to filter query by
  * @returns WorkoutTemplates
  */
-export const getWorkoutTemplates = async (filter: WorkoutTemplatesFilter) => {
+export const getWorkoutTemplates = async (filter: WorkoutTemplateFilter) => {
   return await prisma.workout_templates.findMany({
     where: {
       AND: {
         id: filter.id,
         user_id: filter.userId,
       },
+    },
+  });
+};
+
+/**
+ * @param filter parameters to filter query by
+ * @returns WorkoutTemplates
+ */
+export const getWorkoutTemplate = async (id: number) => {
+  return await prisma.workout_templates.findUnique({
+    where: {
+      id: id,
     },
   });
 };
