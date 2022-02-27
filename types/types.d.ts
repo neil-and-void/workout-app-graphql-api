@@ -7,6 +7,7 @@ interface User {
 
 interface WorkoutTemplate {
   name: string;
+  userId: number;
   exerciseTemplates: ExerciseTemplate[];
 }
 
