@@ -10,4 +10,9 @@ export const workoutResolvers = {
       workout_id: parent.id,
     });
   },
+  workoutTemplate: async (parent: any, _: any, context: any) => {
+    if (!context.user) throw new AuthenticationError('Unauthenticated');
+
+    return await crud.template.getWorkoutTemplate(parent.workout_template_id);
+  },
 };
