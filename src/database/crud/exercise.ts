@@ -6,6 +6,12 @@ interface ExerciseFilter {
   workout_id: number;
 }
 
+/**
+ * READ exercises
+ *
+ * @param filter to search exercises by
+ * @returns exercises
+ */
 export const getExercises = async (filter: ExerciseFilter) => {
   return await prisma.exercises.findMany({
     where: {

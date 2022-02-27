@@ -11,6 +11,10 @@ interface ExerciseTemplateFilter {
   workoutTemplateId?: number;
 }
 
+/**
+ * @param workoutTemplate
+ * @returns newly create workout template
+ */
 export const createWorkoutTemplate = async (workoutTemplate: any) => {
   const { exerciseTemplates } = workoutTemplate;
   return await prisma.workout_templates.create({
@@ -49,6 +53,10 @@ export const getWorkoutTemplate = async (id: number) => {
   });
 };
 
+/**
+ * @param id id of exercise template to get
+ * @returns exercise template
+ */
 export const getExerciseTemplate = async (id: number) => {
   return await prisma.exercise_templates.findFirst({
     where: {
