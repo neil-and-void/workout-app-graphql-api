@@ -12,6 +12,7 @@ export const typeDefs = gql`
   }
 
   input WorkoutTemplateData {
+    id: Int!
     name: String!
     exerciseTemplates: [ExerciseTemplateData]
   }
