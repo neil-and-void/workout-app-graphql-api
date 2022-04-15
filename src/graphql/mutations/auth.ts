@@ -5,7 +5,7 @@ import {
 } from 'apollo-server-express';
 import { comparePassword, hashPassword } from '../../utils/auth';
 import crud from '../../database/crud';
-import { signAccessToken } from '../../utils/token';
+import { signAccessToken, signRefreshToken } from '../../utils/token';
 
 // mutation args types
 
@@ -42,7 +42,7 @@ export const authMutations = {
       firstname: dbUser.firstname,
     };
 
-    const refreshToken = signAccessToken(payload);
+    const refreshToken = signRefreshToken(payload);
     const accessToken = signAccessToken(payload);
 
     return {
