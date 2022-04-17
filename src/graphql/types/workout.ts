@@ -5,14 +5,6 @@ export const typeDefs = gql`
     id: Int
   }
 
-  input NewWorkout {
-    started: String!
-    ended: String
-    active: Boolean
-    workoutTemplateId: Int
-    exerciseData: [ExerciseData]
-  }
-
   input ExerciseData {
     exerciseTemplateId: Int
     setData: [SetData]
@@ -29,7 +21,7 @@ export const typeDefs = gql`
   }
 
   extend type Mutation {
-    workout(newWorkout: NewWorkout): Workout
+    workout(workoutTemplateId: Int): Workout
   }
 
   type Workout {

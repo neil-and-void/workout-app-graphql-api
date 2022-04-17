@@ -1,3 +1,4 @@
+import { Prisma } from '@prisma/client';
 import { prisma } from './prismaClient';
 
 interface WorkoutFilter {
@@ -5,58 +6,50 @@ interface WorkoutFilter {
   id?: number;
 }
 
-interface SetData {
-  exerciseId: number;
-  weight: number;
-  reps: number;
-}
-
-interface ExerciseData {
-  exerciseTemplateId: number;
-  setData: SetData[];
-}
-
-interface NewWorkout {
-  started: string;
-  ended: string;
-  active: boolean;
-  userId: number;
-  workoutTemplateId: number;
-  exerciseData: ExerciseData[];
-}
-
 /**
  * @param newWorkout new workout
  * @returns created workout
  */
-export const createWorkout = async (newWorkout: NewWorkout) => {
-  const exerciseData = newWorkout.exerciseData.map((exercise) => {
-    // create nested sets data
-    const setsData = exercise.setData.map((setData) => ({
-      weight: setData.weight,
-      reps: setData.reps,
-    }));
-
-    return {
-      exercise_template_id: exercise.exerciseTemplateId,
-      sets: {
-        create: setsData,
+export const createWorkout = async (
+  workoutTemplateId: number,
+  userId: number
+) => {
+  try {
+    const workoutTemplate = await prisma.workout_templates.findFirst({
+      where: { id: workoutTemplateId, user_id: userId },
+      include: {
+        exercise_templates: true,
       },
-    };
-  });
+    });
 
-  return await prisma.workouts.create({
-    data: {
-      active: newWorkout.active,
-      started: newWorkout.started,
-      user_id: newWorkout.userId,
-      ended: newWorkout.ended,
-      workout_template_id: newWorkout.workoutTemplateId,
-      exercises: {
-        create: exerciseData,
+    const exerciseData = workoutTemplate?.exercise_templates.map(
+      (exercise) => ({
+        exercise_template_id: exercise.id,
+      })
+    );
+
+    return await prisma.workouts.create({
+      data: {
+        active: true, // new workouts always set to current active
+        started: new Date(),
+        user_id: workoutTemplate!.user_id,
+        ended: null,
+        workout_template_id: workoutTemplate!.id,
+        exercises: {
+          create: exerciseData,
+        },
       },
-    },
-  });
+    });
+  } catch (e) {
+    if (e instanceof Prisma.PrismaClientKnownRequestError) {
+      // The .code property can be accessed in a type-safe manner
+      if (e.code === 'P2025') {
+        console.log(
+          'There is a unique constraint violation, a new user cannot be created with this email'
+        );
+      }
+    }
+  }
 };
 
 /**
