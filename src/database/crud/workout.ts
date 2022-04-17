@@ -4,6 +4,7 @@ import { prisma } from './prismaClient';
 interface WorkoutFilter {
   user_id: number;
   id?: number;
+  active?: boolean;
 }
 
 /**
@@ -15,6 +16,7 @@ export const createWorkout = async (
   userId: number
 ) => {
   try {
+    // find workout template that we are creating new workout from
     const workoutTemplate = await prisma.workout_templates.findFirst({
       where: { id: workoutTemplateId, user_id: userId },
       include: {
@@ -22,12 +24,24 @@ export const createWorkout = async (
       },
     });
 
+    // new exercise for each exercise template
     const exerciseData = workoutTemplate?.exercise_templates.map(
       (exercise) => ({
         exercise_template_id: exercise.id,
       })
     );
 
+    // deactivate other active workouts
+    const updateActiveWorkouts = await prisma.workouts.updateMany({
+      data: {
+        active: false,
+      },
+      where: {
+        active: true,
+      },
+    });
+
+    // create workout
     return await prisma.workouts.create({
       data: {
         active: true, // new workouts always set to current active
