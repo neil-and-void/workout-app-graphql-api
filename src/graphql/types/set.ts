@@ -7,4 +7,14 @@ export const typeDefs = gql`
     weight: Int
     reps: Int
   }
+
+  input CreateSetInput {
+    exerciseId: Int!
+    weight: Int
+    reps: Int
+  }
+
+  extend type Mutation {
+    createSet(set: CreateSetInput): Set
+  }
 `;

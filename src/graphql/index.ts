@@ -5,6 +5,7 @@ import { typeDefs as ExerciseSet } from './types/set';
 import { typeDefs as Template } from './types/template';
 import { typeDefs as Workout } from './types/workout';
 import { typeDefs as Exercise } from './types/exercise';
+import { typeDefs as Set } from './types/set';
 import { typeDefs as Auth } from './types/auth';
 import { authMutations } from './mutations/auth';
 import { userQueries } from './queries/user';
@@ -16,6 +17,7 @@ import { workoutResolvers } from './resolvers/workout';
 import { userResolvers } from './resolvers/user';
 import { exerciseResolvers } from './resolvers/exercise';
 import { workoutMutations } from './mutations/workout';
+import { setMutations } from './mutations/set';
 
 export const typeDefs = [
   Query,
@@ -26,6 +28,7 @@ export const typeDefs = [
   ExerciseSet,
   Workout,
   Template,
+  Set,
 ];
 
 export const resolvers = {
@@ -33,6 +36,7 @@ export const resolvers = {
     ...authMutations,
     ...templateMutations,
     ...workoutMutations,
+    ...setMutations,
   },
   Query: {
     ...userQueries,

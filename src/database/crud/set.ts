@@ -1,5 +1,27 @@
 import { prisma } from './prismaClient';
 
+interface ExerciseSet {
+  exerciseId: number;
+  weight: number;
+  reps: number;
+}
+
+/**
+ *
+ * @param set new exercise
+ * @returns Promise
+ */
+export const createSet = async (set: ExerciseSet) => {
+  const { exerciseId, weight, reps } = set;
+  return await prisma.sets.create({
+    data: {
+      exercise_id: exerciseId,
+      weight: weight,
+      reps: reps,
+    },
+  });
+};
+
 /**
  * READ sets of an exercise
  *
