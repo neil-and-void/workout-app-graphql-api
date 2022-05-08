@@ -16,5 +16,6 @@ export const typeDefs = gql`
 
   extend type Mutation {
     createSet(set: CreateSetInput): Set
+    deleteSet(id: String): Set
   }
 `;

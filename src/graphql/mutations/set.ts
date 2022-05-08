@@ -7,4 +7,9 @@ export const setMutations = {
     const { set } = args;
     return await crud.set.createSet(set);
   },
+  deleteSet: async (_: any, args: any, context: any) => {
+    if (!context.user) throw new AuthenticationError('Unauthenticated');
+    const { id } = args;
+    return await crud.set.deleteSet(Number(id));
+  },
 };

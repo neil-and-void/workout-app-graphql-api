@@ -35,3 +35,17 @@ export const getSets = async (exerciseId: number) => {
     },
   });
 };
+
+/**
+ * DELETE set by id
+ *
+ * @param exerciseId id of set to delete
+ * @returns Promise<set that got deleted>
+ */
+export const deleteSet = async (exerciseId: number) => {
+  return await prisma.sets.delete({
+    where: {
+      id: exerciseId,
+    },
+  });
+};
